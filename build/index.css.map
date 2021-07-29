@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/blocks/hero/styles/editor.scss"],"names":[],"mappings":"AAAA;EACI;EACA;AACJ,C","file":"index.css","sourcesContent":[".wp-block-custom-blocks-hero-image{\n    padding:4em 0;\n    text-align: center;\n}"],"sourceRoot":""}
