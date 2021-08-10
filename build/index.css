@@ -1,6 +1,21 @@
-.wp-block-custom-blocks-hero-image {
-  padding: 4em 0;
-  text-align: center;
+.editor-post-featured-image {
+  width: 100%;
+  height: auto;
+}
+
+.hero {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  width: 100%;
+  height: 300px;
+}
+.hero .overlay-content {
+  width: 65%;
+  left: 80px;
+  bottom: 30px;
+  display: block;
+  position: absolute;
 }
 
 /*# sourceMappingURL=index.css.map*/
