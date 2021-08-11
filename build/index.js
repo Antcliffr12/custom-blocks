@@ -8090,15 +8090,21 @@ const Edit = props => {
     color: '#00f'
   }];
 
-  function onTextChange(changes) {
+  function onTitleChange(changes) {
     props.setAttributes({
       TitleString: changes
     });
   }
 
+  function onTextChange(changes) {
+    props.setAttributes({
+      textString: changes
+    });
+  }
+
   function onTextChangeColor(changes) {
     props.setAttributes({
-      titleColor: changes
+      fontColor: changes
     });
   }
 
@@ -8181,7 +8187,7 @@ const Edit = props => {
     tagName: "h2",
     className: "custom-blocks-title custom-blocks-font-size-" + attributes.titleFontSize,
     value: attributes.TitleString,
-    onChange: onTextChange,
+    onChange: onTitleChange,
     placeholder: "Enter Text Here",
     keepPlaceholderOnFocus: true,
     style: {
@@ -8194,9 +8200,7 @@ const Edit = props => {
     placeholder: "Secondary Text",
     keepPlaceholderOnFocus: true,
     value: attributes.textString,
-    onChange: value => setAttributes({
-      textString: value
-    })
+    onChange: onTextChange
   }))) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaPlaceholder"], {
     icon: "format-image",
     labels: {
@@ -8261,16 +8265,12 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('cus
     TitleString: {
       type: 'array',
       source: 'children',
-      selector: '.custom-blocks-text'
+      selector: '.custom-blocks-title'
     },
     textString: {
       type: 'array',
       source: 'children',
-      selector: 'h2'
-    },
-    titleColor: {
-      type: 'string',
-      default: 'black'
+      selector: '.custom-blocks-text'
     },
     titleFontSize: {
       type: 'number',

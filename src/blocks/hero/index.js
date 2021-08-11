@@ -29,16 +29,12 @@ registerBlockType('custom-blocks/hero-image', {
         TitleString: {
             type: 'array',
             source: 'children',
-            selector: '.custom-blocks-text'
+            selector: '.custom-blocks-title'
         },
         textString: {
             type: 'array',
             source: 'children',
-            selector: 'h2',
-        },
-        titleColor: {
-            type: 'string',
-            default: 'black'
+            selector: '.custom-blocks-text',
         },
         titleFontSize: {
             type: 'number',

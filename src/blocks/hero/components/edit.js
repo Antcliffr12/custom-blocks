@@ -50,15 +50,21 @@ const Edit = (props) => {
             
         ];
     
-    function onTextChange(changes) {
+    function onTitleChange(changes) {
         props.setAttributes({
             TitleString: changes
         })
     }
     
+    function onTextChange(changes) {
+        props.setAttributes({
+            textString: changes
+        })
+    }
+    
     function onTextChangeColor(changes) {
         props.setAttributes({
-            titleColor:changes
+            fontColor:changes
         })
     }
 
@@ -178,7 +184,7 @@ const Edit = (props) => {
                                 tagName="h2"
                                 className={"custom-blocks-title custom-blocks-font-size-" + attributes.titleFontSize}
                                 value={attributes.TitleString}
-                                onChange={onTextChange}
+                                onChange={onTitleChange}
                                 placeholder="Enter Text Here"
                                 keepPlaceholderOnFocus
                                 style={{ color: attributes.titleColor }}
@@ -190,9 +196,7 @@ const Edit = (props) => {
                             placeholder='Secondary Text'
                             keepPlaceholderOnFocus
                             value={attributes.textString}
-                            onChange={(value) => 
-                                setAttributes({textString:value})
-                            }
+                            onChange={onTextChange}
                         />
                         
                          
