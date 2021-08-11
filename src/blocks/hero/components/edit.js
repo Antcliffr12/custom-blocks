@@ -1,7 +1,7 @@
 import { registerBlockType } from "@wordpress/blocks";
 import { useBlockProps, RichText, InspectorControls, MediaUpload, MediaUploadCheck, MediaPlaceholder, BlockControls } from '@wordpress/block-editor';
-import { Panel, PanelBody, PanelRow, Button, ResponsiveWrapper, ToolbarGroup, ToolbarButton, ColorPalette } from '@wordpress/components';
-import { more, edit } from '@wordpress/icons';
+import { Panel, PanelBody, PanelRow, Button, ResponsiveWrapper, ToolbarGroup, ToolbarButton, ColorPalette, SelectControl, RangeControl } from '@wordpress/components';
+import { more, edit, heading } from '@wordpress/icons';
 import { withSelect } from '@wordpress/data';
 
 import { Fragment, useState } from '@wordpress/element';
@@ -10,7 +10,15 @@ import { Fragment, useState } from '@wordpress/element';
 const Edit = (props) => {
     
     const { attributes, setAttributes } = props;
+    
     const ALLOWED_MEDIA_TYPES = ['image', 'video'];
+
+    const onSelectFontSize = (fontSize) => {
+        props.setAttributes({
+            titleFontSize: fontSize
+        })
+    }
+    
 
     const onSelectMedia = (media) => {
         
@@ -19,6 +27,7 @@ const Edit = (props) => {
             mediaUrl: media.url
         });
     }
+    
 
     const removeMedia = () => {
         props.setAttributes({
@@ -43,17 +52,25 @@ const Edit = (props) => {
     
     function onTextChange(changes) {
         props.setAttributes({
-            textString: changes
+            TitleString: changes
         })
     }
     
     function onTextChangeColor(changes) {
         props.setAttributes({
-            fontColor:changes
+            titleColor:changes
         })
     }
 
+    function onChangeOverlay(changes) {
+        props.setAttributes({
+            overlay:changes
+        })
+    }
+
+
     return (
+       
         <Fragment>
               <div {...useBlockProps() }>
                     {
@@ -77,7 +94,36 @@ const Edit = (props) => {
                     }
                 </div>
             <InspectorControls>
-                    <PanelBody title="Hero Image" initialOpen={true}>
+                <PanelBody title="Text Options" initialOpen={false}>
+                    <PanelRow>
+                                     {console.log(attributes.mediaId)}
+
+                        <div className="editor-post-cta-text">
+                            <RangeControl
+                                label="Title Font Size"
+                                value={attributes.titleFontSize}
+                                onChange={onSelectFontSize}
+                                min={24}
+                                max={60}
+                                step={2}
+                            />
+                            <RangeControl
+                                label="Text Font Size"
+                                value={attributes.textFontSize}
+                                onChange={(value) =>
+                                    props.setAttributes({
+                                        textFontSize: value
+                                    })
+                                }
+                                min={14}
+                                max={24}
+                                step={2}
+                            />
+
+                         </div>
+                    </PanelRow>
+                </PanelBody>
+                    <PanelBody title="Background Options" initialOpen={false}>
                         <PanelRow>
                             <div className="editor-post-featured-image">
                                 <MediaUploadCheck>
@@ -112,7 +158,7 @@ const Edit = (props) => {
                        
                         </PanelRow>
                 </PanelBody>
-                <PanelBody title="Hero Text Settings">
+                <PanelBody title="Hero Styles">
                     <PanelRow>
                         <div className="editor-post-featured-text">
                             <ColorPalette
@@ -120,6 +166,7 @@ const Edit = (props) => {
                                 value={attributes.fontColor}
                                 onChange={onTextChangeColor}
                             />
+                            
                         </div>
                     </PanelRow>
                 </PanelBody>
@@ -129,19 +176,33 @@ const Edit = (props) => {
                     <div className="overlay-content">
                             <RichText
                                 tagName="h2"
-                                className="content"
-                                value={attributes.textString}
+                                className={"custom-blocks-title custom-blocks-font-size-" + attributes.titleFontSize}
+                                value={attributes.TitleString}
                                 onChange={onTextChange}
                                 placeholder="Enter Text Here"
-                                style={{color: attributes.fontColor}}
-                            />
+                                keepPlaceholderOnFocus
+                                style={{ color: attributes.titleColor }}
+                        />
+                        <RichText
+                            tagName="div"
+                            multiline="p"
+                            className={"custom-blocks-text custom-blocks-font-size-" + attributes.textFontSize}
+                            placeholder='Secondary Text'
+                            keepPlaceholderOnFocus
+                            value={attributes.textString}
+                            onChange={(value) => 
+                                setAttributes({textString:value})
+                            }
+                        />
+                        
+                         
                     </div>
                 </section>
                 :
                 <MediaPlaceholder
                     icon="format-image"
                     labels={{
-                        title:'Add Hero Image'
+                        title:'Add Image'
                     }}
                     className="block-image"
                     onSelect={onSelectMedia}

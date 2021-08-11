@@ -26,26 +26,37 @@ registerBlockType('custom-blocks/hero-image', {
             type: 'string',
             default: ''
         },
+        TitleString: {
+            type: 'array',
+            source: 'children',
+            selector: '.custom-blocks-text'
+        },
         textString: {
             type: 'array',
             source: 'children',
             selector: 'h2',
         },
-        fontColor: {
+        titleColor: {
             type: 'string',
             default: 'black'
+        },
+        titleFontSize: {
+            type: 'number',
+            default: 32,
+        },
+
+        textFontSize: {
+            type: 'number',
+            default: 16
         }
+
+    
     
     },
     edit:Edit,
     save: (props) => {
-        const { attributes, className } = props;
-        const { fontColor } = props.attributes;
         return (
-            <div className={className}>
-                <div className="overlay"></div>
-                <h2 className="content" style={{ color: fontColor }}>{attributes.textString}</h2>
-            </div>
+           <h1>hi</h1>
         )
     },
 })

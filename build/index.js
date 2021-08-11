@@ -8054,6 +8054,12 @@ const Edit = props => {
   } = props;
   const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
+  const onSelectFontSize = fontSize => {
+    props.setAttributes({
+      titleFontSize: fontSize
+    });
+  };
+
   const onSelectMedia = media => {
     props.setAttributes({
       mediaId: media.id,
@@ -8086,13 +8092,19 @@ const Edit = props => {
 
   function onTextChange(changes) {
     props.setAttributes({
-      textString: changes
+      TitleString: changes
     });
   }
 
   function onTextChangeColor(changes) {
     props.setAttributes({
-      fontColor: changes
+      titleColor: changes
+    });
+  }
+
+  function onChangeOverlay(changes) {
+    props.setAttributes({
+      overlay: changes
     });
   }
 
@@ -8108,8 +8120,29 @@ const Edit = props => {
       onClick: open
     })
   })))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-    title: "Hero Image",
-    initialOpen: true
+    title: "Text Options",
+    initialOpen: false
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, console.log(attributes.mediaId), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "editor-post-cta-text"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+    label: "Title Font Size",
+    value: attributes.titleFontSize,
+    onChange: onSelectFontSize,
+    min: 24,
+    max: 60,
+    step: 2
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+    label: "Text Font Size",
+    value: attributes.textFontSize,
+    onChange: value => props.setAttributes({
+      textFontSize: value
+    }),
+    min: 14,
+    max: 24,
+    step: 2
+  })))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+    title: "Background Options",
+    initialOpen: false
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "editor-post-featured-image"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
@@ -8132,7 +8165,7 @@ const Edit = props => {
     isLink: true,
     isDestructive: true
   }, "Remove Image"))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-    title: "Hero Text Settings"
+    title: "Hero Styles"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "editor-post-featured-text"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPalette"], {
@@ -8146,17 +8179,28 @@ const Edit = props => {
     className: "overlay-content"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     tagName: "h2",
-    className: "content",
-    value: attributes.textString,
+    className: "custom-blocks-title custom-blocks-font-size-" + attributes.titleFontSize,
+    value: attributes.TitleString,
     onChange: onTextChange,
     placeholder: "Enter Text Here",
+    keepPlaceholderOnFocus: true,
     style: {
-      color: attributes.fontColor
+      color: attributes.titleColor
     }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+    tagName: "div",
+    multiline: "p",
+    className: "custom-blocks-text custom-blocks-font-size-" + attributes.textFontSize,
+    placeholder: "Secondary Text",
+    keepPlaceholderOnFocus: true,
+    value: attributes.textString,
+    onChange: value => setAttributes({
+      textString: value
+    })
   }))) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaPlaceholder"], {
     icon: "format-image",
     labels: {
-      title: 'Add Hero Image'
+      title: 'Add Image'
     },
     className: "block-image",
     onSelect: onSelectMedia,
@@ -8214,35 +8258,32 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('cus
       type: 'string',
       default: ''
     },
+    TitleString: {
+      type: 'array',
+      source: 'children',
+      selector: '.custom-blocks-text'
+    },
     textString: {
       type: 'array',
       source: 'children',
       selector: 'h2'
     },
-    fontColor: {
+    titleColor: {
       type: 'string',
       default: 'black'
+    },
+    titleFontSize: {
+      type: 'number',
+      default: 32
+    },
+    textFontSize: {
+      type: 'number',
+      default: 16
     }
   },
   edit: _components_edit__WEBPACK_IMPORTED_MODULE_6__["default"],
   save: props => {
-    const {
-      attributes,
-      className
-    } = props;
-    const {
-      fontColor
-    } = props.attributes;
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      className: className
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      className: "overlay"
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", {
-      className: "content",
-      style: {
-        color: fontColor
-      }
-    }, attributes.textString));
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h1", null, "hi");
   }
 });
 
