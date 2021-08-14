@@ -43,8 +43,17 @@ registerBlockType('custom-blocks/hero-image', {
 
         textFontSize: {
             type: 'number',
-            default: 16
+            default: 16,
+        },
+        textColor: {
+            type: 'string',
+            default: '#32373c'
+        },
+        opacity: {
+            type: 'number',
+            default: 100
         }
+
 
     
     

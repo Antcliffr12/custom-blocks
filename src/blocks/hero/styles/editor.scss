@@ -1,26 +1,11 @@
-.editor-post-featured-image {
-    width:100%;
-    height:auto;
+//display
+.block-editor-block-list__layout [data-type="custom-blocks/hero-image"] {
+    margin-bottom: 1.2em;
 }
 
-
-//display
 .hero{
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
     width: 100%;
-    height: 300px;
-
-    .overlay-content{
-        width: 65%;
-        left: 80px;
-        bottom: 30px;
-        display: block;
-        position: absolute;
-    }
-
-    
+    height: 300px;    
 }
 
 .custom-blocks-title{
@@ -130,3 +115,4 @@
 .custom-blocks-font-size-24.custom-blocks-text {
     font-size: 24px;
 }
+

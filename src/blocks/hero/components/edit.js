@@ -1,5 +1,5 @@
 import { registerBlockType } from "@wordpress/blocks";
-import { useBlockProps, RichText, InspectorControls, MediaUpload, MediaUploadCheck, MediaPlaceholder, BlockControls } from '@wordpress/block-editor';
+import { useBlockProps, RichText, InspectorControls, MediaUpload, MediaUploadCheck, MediaPlaceholder, BlockControls, PanelColorSettings } from '@wordpress/block-editor';
 import { Panel, PanelBody, PanelRow, Button, ResponsiveWrapper, ToolbarGroup, ToolbarButton, ColorPalette, SelectControl, RangeControl } from '@wordpress/components';
 import { more, edit, heading } from '@wordpress/icons';
 import { withSelect } from '@wordpress/data';
@@ -37,19 +37,11 @@ const Edit = (props) => {
     }
     
     const backgroundStyle = {
-        backgroundImage: attributes.mediaUrl != 0 ? 'url("' + attributes.mediaUrl + '")' : 'url("https://www.fillmurray.com/900/300")'
+        backgroundImage: attributes.mediaUrl != 0 ? 'url("' + attributes.mediaUrl + '")' : 'none'
     };
 
-    //text
-        const [color, setColor] = useState('#000000')
+   
 
-        const colors = [
-            { name: 'grey', color: '#808080' },
-            { name: 'white', color: '#ffffff' },
-            { name: 'blue', color: '#00f' },
-            
-        ];
-    
     function onTitleChange(changes) {
         props.setAttributes({
             TitleString: changes
@@ -74,11 +66,21 @@ const Edit = (props) => {
         })
     }
 
+    function onChangeTextColor(color) {
+        props.setAttributes({
+            textColor: color
+        })
+    }
+    
+    function opacityClass(opacityValue) {
+        return 0 === opacityValue || 100 === opacityValue ? null : 'has-background-opacity-' + opacityValue;
+    }
+
 
     return (
        
         <Fragment>
-              <div {...useBlockProps() }>
+              <figure {...useBlockProps() }>
                     {
                     <BlockControls>
                         <ToolbarGroup>
@@ -98,12 +100,10 @@ const Edit = (props) => {
                     </ToolbarGroup>
                     </BlockControls>
                     }
-                </div>
+                </figure>
             <InspectorControls>
                 <PanelBody title="Text Options" initialOpen={false}>
                     <PanelRow>
-                                     {console.log(attributes.mediaId)}
-
                         <div className="editor-post-cta-text">
                             <RangeControl
                                 label="Title Font Size"
@@ -125,7 +125,17 @@ const Edit = (props) => {
                                 max={24}
                                 step={2}
                             />
-
+                            <PanelColorSettings
+							title='Text Color'
+							initialOpen={ false }
+							colorSettings={ [
+								{
+                                    value: attributes.textColor,
+									onChange: onChangeTextColor,
+									label: 'Text Color',
+								},
+							] }
+						></PanelColorSettings>
                          </div>
                     </PanelRow>
                 </PanelBody>
@@ -154,32 +164,39 @@ const Edit = (props) => {
                                             }
                                         </Button>
                                     )} />
+                                
                             </MediaUploadCheck>
                             {attributes.mediaId != 0 &&
                                 <MediaUploadCheck>
                                     <Button onClick={removeMedia} isLink isDestructive>Remove Image</Button>
                                 </MediaUploadCheck>
                             }
+                           <RangeControl
+                                label="Image Opacity"
+                                value={attributes.opacity}
+                                onChange={(value) =>
+                                    props.setAttributes({
+                                        opacity: value
+                                    })
+                                }
+                                min={0}
+                                max={100}
+                                step={10}
+                            />
+
                         </div>
                        
                         </PanelRow>
                 </PanelBody>
-                <PanelBody title="Hero Styles">
-                    <PanelRow>
-                        <div className="editor-post-featured-text">
-                            <ColorPalette
-                                colors={colors}
-                                value={attributes.fontColor}
-                                onChange={onTextChangeColor}
-                            />
-                            
-                        </div>
-                    </PanelRow>
-                </PanelBody>
             </InspectorControls>
             {attributes.mediaId ?
-                <section className="hero" style={backgroundStyle}>
-                    <div className="overlay-content">
+                <div className="hero">
+                    
+                    <div className="image-wrap">
+                         <img src={attributes.mediaUrl} className={`img-fluid ` + opacityClass(attributes.opacity)} />
+
+                    </div>
+                    <div className="content position-1">
                             <RichText
                                 tagName="h2"
                                 className={"custom-blocks-title custom-blocks-font-size-" + attributes.titleFontSize}
@@ -187,21 +204,22 @@ const Edit = (props) => {
                                 onChange={onTitleChange}
                                 placeholder="Enter Text Here"
                                 keepPlaceholderOnFocus
-                                style={{ color: attributes.titleColor }}
-                        />
-                        <RichText
-                            tagName="div"
-                            multiline="p"
-                            className={"custom-blocks-text custom-blocks-font-size-" + attributes.textFontSize}
-                            placeholder='Secondary Text'
-                            keepPlaceholderOnFocus
-                            value={attributes.textString}
-                            onChange={onTextChange}
-                        />
-                        
-                         
+                                style={{ color: attributes.textColor }}
+                            />
+                            <RichText
+                                tagName="div"
+                                multiline="p"
+                                className={"custom-blocks-text custom-blocks-font-size-" + attributes.textFontSize}
+                                placeholder='Secondary Text'
+                                keepPlaceholderOnFocus
+                                value={attributes.textString}
+                                onChange={onTextChange}
+                                style={{ color: attributes.textColor }}
+                            />                
                     </div>
-                </section>
+                           
+                </div>
+                
                 :
                 <MediaPlaceholder
                     icon="format-image"

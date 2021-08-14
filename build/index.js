@@ -8075,20 +8075,8 @@ const Edit = props => {
   };
 
   const backgroundStyle = {
-    backgroundImage: attributes.mediaUrl != 0 ? 'url("' + attributes.mediaUrl + '")' : 'url("https://www.fillmurray.com/900/300")'
-  }; //text
-
-  const [color, setColor] = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useState"])('#000000');
-  const colors = [{
-    name: 'grey',
-    color: '#808080'
-  }, {
-    name: 'white',
-    color: '#ffffff'
-  }, {
-    name: 'blue',
-    color: '#00f'
-  }];
+    backgroundImage: attributes.mediaUrl != 0 ? 'url("' + attributes.mediaUrl + '")' : 'none'
+  };
 
   function onTitleChange(changes) {
     props.setAttributes({
@@ -8114,7 +8102,17 @@ const Edit = props => {
     });
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
+  function onChangeTextColor(color) {
+    props.setAttributes({
+      textColor: color
+    });
+  }
+
+  function opacityClass(opacityValue) {
+    return 0 === opacityValue || 100 === opacityValue ? null : 'has-background-opacity-' + opacityValue;
+  }
+
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("figure", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
     onSelect: onSelectMedia,
     allowedTypes: ALLOWED_MEDIA_TYPES,
     value: attributes.mediaId,
@@ -8128,7 +8126,7 @@ const Edit = props => {
   })))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Text Options",
     initialOpen: false
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, console.log(attributes.mediaId), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "editor-post-cta-text"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
     label: "Title Font Size",
@@ -8146,6 +8144,14 @@ const Edit = props => {
     min: 14,
     max: 24,
     step: 2
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["PanelColorSettings"], {
+    title: "Text Color",
+    initialOpen: false,
+    colorSettings: [{
+      value: attributes.textColor,
+      onChange: onChangeTextColor,
+      label: 'Text Color'
+    }]
   })))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Background Options",
     initialOpen: false
@@ -8170,19 +8176,24 @@ const Edit = props => {
     onClick: removeMedia,
     isLink: true,
     isDestructive: true
-  }, "Remove Image"))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-    title: "Hero Styles"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "editor-post-featured-text"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ColorPalette"], {
-    colors: colors,
-    value: attributes.fontColor,
-    onChange: onTextChangeColor
-  }))))), attributes.mediaId ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("section", {
-    className: "hero",
-    style: backgroundStyle
+  }, "Remove Image")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+    label: "Image Opacity",
+    value: attributes.opacity,
+    onChange: value => props.setAttributes({
+      opacity: value
+    }),
+    min: 0,
+    max: 100,
+    step: 10
+  }))))), attributes.mediaId ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "hero"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "overlay-content"
+    className: "image-wrap"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
+    src: attributes.mediaUrl,
+    className: `img-fluid ` + opacityClass(attributes.opacity)
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "content position-1"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     tagName: "h2",
     className: "custom-blocks-title custom-blocks-font-size-" + attributes.titleFontSize,
@@ -8191,7 +8202,7 @@ const Edit = props => {
     placeholder: "Enter Text Here",
     keepPlaceholderOnFocus: true,
     style: {
-      color: attributes.titleColor
+      color: attributes.textColor
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     tagName: "div",
@@ -8200,7 +8211,10 @@ const Edit = props => {
     placeholder: "Secondary Text",
     keepPlaceholderOnFocus: true,
     value: attributes.textString,
-    onChange: onTextChange
+    onChange: onTextChange,
+    style: {
+      color: attributes.textColor
+    }
   }))) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaPlaceholder"], {
     icon: "format-image",
     labels: {
@@ -8279,6 +8293,14 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('cus
     textFontSize: {
       type: 'number',
       default: 16
+    },
+    textColor: {
+      type: 'string',
+      default: '#32373c'
+    },
+    opacity: {
+      type: 'number',
+      default: 100
     }
   },
   edit: _components_edit__WEBPACK_IMPORTED_MODULE_6__["default"],
