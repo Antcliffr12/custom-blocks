@@ -8,7 +8,7 @@ import { Fragment, useState } from '@wordpress/element';
 
 
 const Edit = (props) => {
-    
+
     const { attributes, setAttributes } = props;
     
     const ALLOWED_MEDIA_TYPES = ['image', 'video'];
@@ -73,14 +73,14 @@ const Edit = (props) => {
     }
     
     function opacityClass(opacityValue) {
-        return 0 === opacityValue || 100 === opacityValue ? null : 'has-background-opacity-' + opacityValue;
+        return 100 === opacityValue ? '' : 'has-background-opacity-' + opacityValue;
     }
 
 
     return (
        
         <Fragment>
-              <figure {...useBlockProps() }>
+              <div {...useBlockProps() }>
                     {
                     <BlockControls>
                         <ToolbarGroup>
@@ -100,7 +100,7 @@ const Edit = (props) => {
                     </ToolbarGroup>
                     </BlockControls>
                     }
-                </figure>
+                </div>
             <InspectorControls>
                 <PanelBody title="Text Options" initialOpen={false}>
                     <PanelRow>
@@ -190,12 +190,7 @@ const Edit = (props) => {
                 </PanelBody>
             </InspectorControls>
             {attributes.mediaId ?
-                <div className="hero">
-                    
-                    <div className="image-wrap">
-                         <img src={attributes.mediaUrl} className={`img-fluid ` + opacityClass(attributes.opacity)} />
-
-                    </div>
+                <div className={`hero ` + opacityClass(attributes.opacity)} style={backgroundStyle}>
                     <div className="content position-1">
                             <RichText
                                 tagName="h2"

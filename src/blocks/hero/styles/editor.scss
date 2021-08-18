@@ -1,12 +1,19 @@
 //display
 .block-editor-block-list__layout [data-type="custom-blocks/hero-image"] {
     margin-bottom: 1.2em;
+   
 }
 
+// .editor-styles-wrapper [data-type="custom-blocks/hero-image"] .wp-block{
+//     max-width: 100% !important;
+// }
 .hero{
     width: 100%;
     height: 300px;    
+    background-size:cover;
 }
+
+
 
 .custom-blocks-title{
     display: inline-block;
@@ -115,4 +122,36 @@
 .custom-blocks-font-size-24.custom-blocks-text {
     font-size: 24px;
 }
+
+.has-background-opacity-0{
+    opacity: 0;
+}
+.has-background-opacity-10{
+    opacity: .1;
+}
+.has-background-opacity-20{
+    opacity: .2;
+}
+.has-background-opacity-30{
+    opacity: 3;
+}
+.has-background-opacity-40{
+    opacity: .4;
+}
+.has-background-opacity-50{
+    opacity: .5;
+}
+.has-background-opacity-60{
+    opacity: .6;
+}
+.has-background-opacity-70{
+    opacity: .7;
+}
+.has-background-opacity-80{
+    opacity: .8;
+}
+.has-background-opacity-90{
+    opacity: .9;
+}
+
 

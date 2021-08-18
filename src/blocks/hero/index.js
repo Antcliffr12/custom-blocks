@@ -17,7 +17,9 @@ registerBlockType('custom-blocks/hero-image', {
     keywords: [
         'custom-blocks', 'hero', 'image'
     ],
+  
     attributes: {
+  
         mediaId: {
             type: 'number',
             default: 0
