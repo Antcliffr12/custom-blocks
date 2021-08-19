@@ -21,9 +21,10 @@ const BackgroundAttributes = {
     backgroundColor: {
         type: 'string'
     },
-    focalPoint: {
-		type: 'object',
-	},
+    backgroundOpacity: {
+        type: 'number',
+        default: 100
+    }
 }
 
 export default BackgroundAttributes

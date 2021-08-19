@@ -11,7 +11,7 @@ import {
     MediaUploadCheck,
     MediaPlaceholder
 } from '@wordpress/block-editor';
-import { Panel, PanelBody, PanelRow, Button, ButtonGroup, Icon, FocalPointPicker, ResponsiveWrapper, __experimentalSpacer as Spacer } from '@wordpress/components';
+import { RangeControl, Panel, PanelBody, PanelRow, Button, ButtonGroup, Icon, FocalPointPicker, ResponsiveWrapper, __experimentalSpacer as Spacer, SelectControl } from '@wordpress/components';
 
 
 
@@ -61,6 +61,36 @@ const BackgroundImagePanel = (props) => {
             backgroundColor: value
         })
     }
+
+    const backgroundRepeat = [
+        {
+            value: 'no-repeat',
+            label: __('No Repeat', 'custom-blocks')
+        },
+        {
+            value: 'repeat-x',
+            label: __('Repeat Horizontally', 'custom-blocks')
+        },
+        {
+            value: 'repeat-y',
+            label: __('Repeat Vertically', 'custom-blocks')
+        },
+    ];
+
+    const backgroundSize = [
+        {
+            value: 'auto',
+            label: __('Auto', 'custom-blocks')
+        },
+        {
+            value: 'cover',
+            label: __('Cover', 'custom-blocks')
+        },
+        {
+            value: 'contain',
+            label: __('Contain', 'custom-blocks')
+        }
+    ]
 
 
 
@@ -113,6 +143,42 @@ const BackgroundImagePanel = (props) => {
                             },
                         ] }
                     ></PanelColorSettings>
+                    <RangeControl
+                        label={__('Image Opacity', 'custom-blocks')}
+                        value={attributes.backgroundOpacity}
+                        onChange={(value) => 
+                            props.setAttributes({
+                                backgroundOpacity: value
+                            })
+                        }
+                        min={0}
+                        max={100}
+                        step={10}
+                    />
+                    <SelectControl
+                        label={__('Image Display', 'custom-blocks')}
+                        value={attributes.backgroundSize}
+                        options={backgroundSize}
+                        onChange={(value) => 
+                            props.setAttributes({
+                                backgroundSize: value
+                            })
+                        }
+                    />
+                    {'cover' !== attributes.backgroundSize && (
+                        <SelectControl
+                            label={
+                                __('Image Repeat', 'custom-blocks')
+                            }
+                            value={attributes.backgroundRepeat}
+                            options={backgroundRepeat}
+                            onChange={(value) =>
+                                props.setAttributes({
+                                    backgroundRepeat: value
+                                })
+                            }
+                        />
+                    )}
                 </PanelBody>
             </InspectorControls>
         </Fragment>

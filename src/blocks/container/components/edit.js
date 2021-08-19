@@ -16,7 +16,7 @@ import { withSelect } from '@wordpress/data';
 import { more, edit, image } from '@wordpress/icons';
 
 import BackgroundImagePanel from '../../../utils/components/background-image/inspector';
-
+import BackgroundClasses from '../../../utils/components/background-image/classes';
 import classnames from 'classnames';
 
 const Edit = (props) => {
@@ -39,7 +39,7 @@ const Edit = (props) => {
 
      const onSelectMedia = (media) => {
         
-        props.setAttributes({
+    props.setAttributes({
             mediaId: media.id,
             mediaUrl: media.url
         });
@@ -69,15 +69,18 @@ const Edit = (props) => {
         })
     }
     
-
     const styles = {
         backgroundColor: attributes.backgroundColor ? attributes.backgroundColor : undefined,
+        backgroundImage: attributes.mediaUrl != 0 ? 'url("' + attributes.mediaUrl + '")' : ''
+
     }
 
     const className = classnames(
 			[ props.className, 'cb-block-container' ],
 			{
-				[ 'align' + attributes.containerWidth ]: attributes.containerWidth,
+                ['align' + attributes.containerWidth]: attributes.containerWidth,
+                ['cb-font-size-' + attributes.textFontSize]: attributes.textFontSize,
+                ...BackgroundClasses(attributes)
 			}
 		);
 

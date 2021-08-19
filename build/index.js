@@ -8122,8 +8122,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
 /* harmony import */ var _utils_components_background_image_inspector__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../utils/components/background-image/inspector */ "./src/utils/components/background-image/inspector.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_components_background_image_classes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../utils/components/background-image/classes */ "./src/utils/components/background-image/classes.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_8__);
+
 
 
 
@@ -8185,10 +8187,13 @@ const Edit = props => {
   }
 
   const styles = {
-    backgroundColor: attributes.backgroundColor ? attributes.backgroundColor : undefined
+    backgroundColor: attributes.backgroundColor ? attributes.backgroundColor : undefined,
+    backgroundImage: attributes.mediaUrl != 0 ? 'url("' + attributes.mediaUrl + '")' : ''
   };
-  const className = classnames__WEBPACK_IMPORTED_MODULE_7___default()([props.className, 'cb-block-container'], {
-    ['align' + attributes.containerWidth]: attributes.containerWidth
+  const className = classnames__WEBPACK_IMPORTED_MODULE_8___default()([props.className, 'cb-block-container'], {
+    ['align' + attributes.containerWidth]: attributes.containerWidth,
+    ['cb-font-size-' + attributes.textFontSize]: attributes.textFontSize,
+    ...Object(_utils_components_background_image_classes__WEBPACK_IMPORTED_MODULE_7__["default"])(attributes)
   });
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
     onSelect: onSelectMedia,
@@ -8365,6 +8370,35 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('cus
 /*!*************************************************!*\
   !*** ./src/blocks/container/styles/editor.scss ***!
   \*************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./src/blocks/global-styles/index.js":
+/*!*******************************************!*\
+  !*** ./src/blocks/global-styles/index.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _styles_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/styles.scss */ "./src/blocks/global-styles/styles/styles.scss");
+/* Styles in central location */
+ // import './styles/editor.scss';
+
+/***/ }),
+
+/***/ "./src/blocks/global-styles/styles/styles.scss":
+/*!*****************************************************!*\
+  !*** ./src/blocks/global-styles/styles/styles.scss ***!
+  \*****************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -8688,9 +8722,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_hero_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./blocks/hero/index.js */ "./src/blocks/hero/index.js");
 /* harmony import */ var _blocks_container_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./blocks/container/index.js */ "./src/blocks/container/index.js");
+/* harmony import */ var _blocks_global_styles_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocks/global-styles/index.js */ "./src/blocks/global-styles/index.js");
 /**
  * Import Blocks
  */
+
 
 
 
@@ -8727,11 +8763,43 @@ const BackgroundAttributes = {
   backgroundColor: {
     type: 'string'
   },
-  focalPoint: {
-    type: 'object'
+  backgroundOpacity: {
+    type: 'number',
+    default: 100
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (BackgroundAttributes);
+
+/***/ }),
+
+/***/ "./src/utils/components/background-image/classes.js":
+/*!**********************************************************!*\
+  !*** ./src/utils/components/background-image/classes.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// function BackgroundClasses(attributes) {
+//     return [
+//         attributes.backgroundURL &&
+//             attributes.backgroundSize &&
+//             'no-repeat' === attributes.backgroundRepeat ? 'cb-background-' + attributes.backgroundSize : null,
+//         attributes.backgroundURL && attributes.backgroundRepeat ? 'cb-background-' + backgroundRepeat : null
+//     ];
+// }
+// export default BackgroundClasses;
+// attributes.backgroundColor ? attributes.backgroundColor : undefined
+function BackgroundClasses(attributes) {
+  return {
+    ['cb-opacity-' + attributes.backgroundOpacity]: attributes.backgroundOpacity,
+    ['cb-background-' + attributes.backgroundRepeat]: attributes.backgroundRepeat,
+    ['cb-backgroundSize-' + attributes.backgroundSize]: attributes.backgroundSize
+  };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (BackgroundClasses);
 
 /***/ }),
 
@@ -8808,6 +8876,26 @@ const BackgroundImagePanel = props => {
     });
   };
 
+  const backgroundRepeat = [{
+    value: 'no-repeat',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('No Repeat', 'custom-blocks')
+  }, {
+    value: 'repeat-x',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Repeat Horizontally', 'custom-blocks')
+  }, {
+    value: 'repeat-y',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Repeat Vertically', 'custom-blocks')
+  }];
+  const backgroundSize = [{
+    value: 'auto',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Auto', 'custom-blocks')
+  }, {
+    value: 'cover',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Cover', 'custom-blocks')
+  }, {
+    value: 'contain',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Contain', 'custom-blocks')
+  }];
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Background Options', 'custom-blocks'),
     initialOpen: false
@@ -8838,6 +8926,29 @@ const BackgroundImagePanel = props => {
       onChange: onChangeBackgroundColor,
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Background Color', 'custom-blocks')
     }]
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Image Opacity', 'custom-blocks'),
+    value: attributes.backgroundOpacity,
+    onChange: value => props.setAttributes({
+      backgroundOpacity: value
+    }),
+    min: 0,
+    max: 100,
+    step: 10
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Image Display', 'custom-blocks'),
+    value: attributes.backgroundSize,
+    options: backgroundSize,
+    onChange: value => props.setAttributes({
+      backgroundSize: value
+    })
+  }), 'cover' !== attributes.backgroundSize && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SelectControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Image Repeat', 'custom-blocks'),
+    value: attributes.backgroundRepeat,
+    options: backgroundRepeat,
+    onChange: value => props.setAttributes({
+      backgroundRepeat: value
+    })
   }))));
 };
 
