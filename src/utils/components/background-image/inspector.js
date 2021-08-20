@@ -93,7 +93,6 @@ const BackgroundImagePanel = (props) => {
     ]
 
 
-
     return (
         <Fragment>
             <InspectorControls>

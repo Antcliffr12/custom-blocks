@@ -17,6 +17,9 @@ import { more, edit, image } from '@wordpress/icons';
 
 import BackgroundImagePanel from '../../../utils/components/background-image/inspector';
 import BackgroundClasses from '../../../utils/components/background-image/classes';
+
+import TextCTAOptionsPanel from '../../../utils/components/text-options/inspector';
+import {TitleClasses, TextClasses} from '../../../utils/components/text-options/classes';
 import classnames from 'classnames';
 
 const Edit = (props) => {
@@ -38,8 +41,7 @@ const Edit = (props) => {
     }
 
      const onSelectMedia = (media) => {
-        
-    props.setAttributes({
+        props.setAttributes({
             mediaId: media.id,
             mediaUrl: media.url
         });
@@ -75,17 +77,28 @@ const Edit = (props) => {
 
     }
 
+
+
     const className = classnames(
-			[ props.className, 'cb-block-container' ],
+        [props.className, 'cb-block-container',
+        ],
 			{
                 ['align' + attributes.containerWidth]: attributes.containerWidth,
-                ['cb-font-size-' + attributes.textFontSize]: attributes.textFontSize,
-                ...BackgroundClasses(attributes)
+                ...BackgroundClasses(attributes),
 			}
-		);
+    );
+    
+    const TitleClassName = classnames(
+        ...TitleClasses(attributes)
+    )
+
+    const TextClassName = classnames(
+        ...TextClasses(attributes)
+    )
 
     return (
         <Fragment>
+            
             <div {...useBlockProps()}>
                 {
                     <BlockControls>
@@ -111,47 +124,18 @@ const Edit = (props) => {
                 <BackgroundImagePanel
                     {...props}
                 ></BackgroundImagePanel>
+                <TextCTAOptionsPanel
+                    {...props}
+                >
+                </TextCTAOptionsPanel>
+                
               
-                <PanelBody title="Text Options" initialOpen={false}>
-                            <RangeControl
-                                label="Title Font Size"
-                                value={attributes.titleFontSize}
-                                onChange={onSelectTitleSize}
-                                min={24}
-                                max={60}
-                                step={2}
-                            />
-                            <RangeControl
-                                label="Text Font Size"
-                                value={attributes.textFontSize}
-                                onChange={(value) =>
-                                    props.setAttributes({
-                                        textFontSize: value
-                                    })
-                                }
-                                min={14}
-                                max={24}
-                                step={2}
-                        />
-                        <PanelColorSettings
-                            title={__('Text Color', 'cb-blocks')}
-                            initialOpen={false}
-                            colorSettings={[
-                                {
-                                    value: attributes.textColor,
-                                    onChange: onChangeTextColor,
-                                    label: 'Text Color'
-                                },
-                            ]}
-                            ></PanelColorSettings>
-                         
-                </PanelBody>
             </InspectorControls>
             {attributes.mediaId ?
                 <div className={className ? className : undefined} style={styles}>
                     <RichText
                         tagName="h2"
-                        className={"custom-blocks-title custom-blocks-font-size-" + attributes.titleFontSize}
+                        className={TitleClassName}
                         value={attributes.TitleString}
                         onChange={onTitleChange}
                         placeholder="Enter Text Here"
@@ -160,8 +144,8 @@ const Edit = (props) => {
                     />
                     <RichText
                         tagName="div"
+                        className={TextClassName}
                         multiline="p"
-                        className={"custom-blocks-text custom-blocks-font-size-" + attributes.textFontSize}
                         placeholder='Secondary Text'
                         keepPlaceholderOnFocus
                         value={attributes.textString}

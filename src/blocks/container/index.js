@@ -8,6 +8,7 @@ import './styles/style.scss';
 
 import Edit from './components/edit.js'
 import BackgroundAttributes from './../../utils/components/background-image/attributes'
+import TextCTAAttribtues from './../../utils/components/text-options/attributes';
 
 registerBlockType('custom-blocks/cb-container', {
     title: __('Container', 'custom-blocks'),
@@ -28,32 +29,12 @@ registerBlockType('custom-blocks/cb-container', {
     },
     attributes: {
         ...BackgroundAttributes,
+        ...TextCTAAttribtues,
         containerWidth: {
             type: 'string',
         },
       
-        titleFontSize: {
-            type: 'number',
-            default: 32
-        },
-        TitleString: {
-            type: 'array',
-            source: 'children',
-            selector: '.custom-blocks-title'
-        },
-        textString: {
-            type: 'array',
-            source: 'children',
-            selector: '.custom-blocks-text',
-        },
-        textFontSize: {
-            type: 'number',
-            default: 16,
-        },
-        textColor: {
-            type: 'string',
-            default: '#32373c'
-        },
+       
 
     },
 

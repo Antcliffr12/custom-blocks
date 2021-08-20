@@ -23,36 +23,6 @@
   width: 100%;
   transition: 0.3s ease;
 }
-.hero .has-background-opacity-0 {
-  opacity: 0;
-}
-.hero .has-background-opacity-10 {
-  opacity: 0.1;
-}
-.hero .has-background-opacity-20 {
-  opacity: 0.2;
-}
-.hero .has-background-opacity-30 {
-  opacity: 3;
-}
-.hero .has-background-opacity-40 {
-  opacity: 0.4;
-}
-.hero .has-background-opacity-50 {
-  opacity: 0.5;
-}
-.hero .has-background-opacity-60 {
-  opacity: 0.6;
-}
-.hero .has-background-opacity-70 {
-  opacity: 0.7;
-}
-.hero .has-background-opacity-80 {
-  opacity: 0.8;
-}
-.hero .has-background-opacity-90 {
-  opacity: 0.9;
-}
 .hero .content {
   position: relative;
   z-index: 2;
